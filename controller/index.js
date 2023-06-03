@@ -34,25 +34,9 @@ function renderGiaoDien() {
 }
 
 function themNhanVien() {
-  var _tK = document.getElementById("tknv").value;
-  var _name = document.getElementById("name").value;
-  var _email = document.getElementById("email").value;
-  var _pass = document.getElementById("password").value;
-  var _ngayLam = document.getElementById("datepicker").value;
-  var _luong = document.getElementById("luongCB").value * 1;
-  var _cV = document.getElementById("chucvu").value;
-  var _gioLam = document.getElementById("gioLam").value * 1;
-
-  var nhanVien = new NhanVien(
-    _tK,
-    _name,
-    _email,
-    _pass,
-    _ngayLam,
-    _luong,
-    _cV,
-    _gioLam
-  );
+  
+  var nhanVien = layGiaTriInput();
+  
   arrNhanVien.push(nhanVien);
   // render lên giao diện
   renderGiaoDien();
@@ -61,35 +45,15 @@ function themNhanVien() {
 
 document.getElementById("btnThemNV").onclick = themNhanVien;
 
-// Tìm vị trí nhân viên
-function timNhanVien(tK) {
-  var viTri = -1;
-  arrNhanVien.forEach(function (item, index) {
-    if (item.tK == tK) {
-      viTri = index;
-    }
-  });
-  return viTri;
-}
 
-// Gán giá trị
-function ganGiaTriChoInput(tK, name, email, pass, ngayLam, luong, cV, gioLam) {
-  document.getElementById("tknv").value = tK;
-  document.getElementById("name").value = name;
-  document.getElementById("email").value = email;
-  document.getElementById("password").value = pass;
-  document.getElementById("datepicker").value = ngayLam;
-  document.getElementById("luongCB").value = luong;
-  document.getElementById("chucvu").value = cV;
-  document.getElementById("gioLam").value = gioLam;
-}
+
 
 // Xóa nhân viên
 function xoaNhanVien(tK) {
   console.log(tK);
   var index = timViTriNhanVien(tK);
-  if (viTri != -1) {
-    arrNhanVien.splice(viTri, 1);
+  if (index != -1) {
+    arrNhanVien.splice(index, 1);
     renderGiaoDien();
   }
 }
@@ -108,5 +72,17 @@ function capNhat(tK) {
     nhanVien.cV,
     nhanVien.gioLam
   );
+  document.getElementById("tknv").readOnly = true;
+  document.getElementById("btnThemNV").readOnly = true;
 }
-document.getElementById("btnCapNhat").onclick = capNhat;
+function capNhatThongTinNhanVien() {
+  var nhanVienDaChinhSua = layGiaTriInput();
+  console.log(nhanVienDaChinhSua);
+  var index = timViTriNhanVien(nhanVienDaChinhSua.tK);
+  console.log(index);
+  // sau khi tìm được vị trí index của phần đang chỉnh sửa trong mảng, chúng ta sẽ làm một việc là thay thế phần tử đó trong mảng bằng giá trị mới
+  arrNhanVien[index] = nhanVienDaChinhSua;
+  saveStorage(arrNhanVien);
+  renderGiaoDien();
+}
+document.getElementById("btnCapNhat").onclick = capNhatThongTinNhanVien;

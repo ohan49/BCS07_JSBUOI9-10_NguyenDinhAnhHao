@@ -31,6 +31,28 @@ function layGiaTriInput() {
   var _cV = document.getElementById("chucvu").value;
   var _gioLam = document.getElementById("gioLam").value * 1;
 
+  var valid = true;
+  valid =
+    kiemTraRong(_tK, "tbTKNV") &
+    kiemTraRong(_name, "tbTen") &
+    kiemTraRong(_email, "tbEmail") &
+    kiemTraRong(_pass, "tbMatKhau") &
+    kiemTraRong(_ngayLam, "tbNgay") &
+    kiemTraRong(_luong, "tbLuongCB") &
+    kiemTraRong(_cV, "tbChucVu") &
+    kiemTraRong(_gioLam, "tbGiolam");
+
+  valid &= kiemTraEmail(_email, "tbEmail");
+  valid &= kiemTraTK(_tK, "tbTKNV");
+  valid &= kiemTraTen(_name, "tbTen");
+  valid &= kiemTraPass(_pass, "tbMatKhau");
+  valid &= kiemTraLuong(_luong, "tbLuongCB");
+  valid &= kiemTraGio(_gioLam, "tbGiolam")
+  //* kiểm tra valid
+  if (!valid) {
+    return;
+  }
+
   //* Khi lấy được dữ liệu gọi tới lớp đối tượng nhân viên và tạo ra đối lượng nhân viên
   var nhanVien = new NhanVien(
     _tK,
@@ -44,3 +66,5 @@ function layGiaTriInput() {
   );
   return nhanVien;
 }
+
+

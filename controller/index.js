@@ -34,19 +34,16 @@ function renderGiaoDien() {
 }
 
 function themNhanVien() {
-  
   var nhanVien = layGiaTriInput();
-  
-  arrNhanVien.push(nhanVien);
-  // render lên giao diện
-  renderGiaoDien();
-  ganGiaTriChoInput("", "", "", "", "", "", "", "");
+  if (nhanVien) {
+    arrNhanVien.push(nhanVien);
+    // render lên giao diện
+    renderGiaoDien();
+    ganGiaTriChoInput("", "", "", "", "", "", "", "");
+  }
 }
 
 document.getElementById("btnThemNV").onclick = themNhanVien;
-
-
-
 
 // Xóa nhân viên
 function xoaNhanVien(tK) {
@@ -73,7 +70,6 @@ function capNhat(tK) {
     nhanVien.gioLam
   );
   document.getElementById("tknv").readOnly = true;
-  document.getElementById("btnThemNV").readOnly = true;
 }
 function capNhatThongTinNhanVien() {
   var nhanVienDaChinhSua = layGiaTriInput();
@@ -82,7 +78,8 @@ function capNhatThongTinNhanVien() {
   console.log(index);
   // sau khi tìm được vị trí index của phần đang chỉnh sửa trong mảng, chúng ta sẽ làm một việc là thay thế phần tử đó trong mảng bằng giá trị mới
   arrNhanVien[index] = nhanVienDaChinhSua;
-  saveStorage(arrNhanVien);
   renderGiaoDien();
+  ganGiaTriChoInput("", "", "", "", "", "", "", "");
+  document.getElementById("tknv").readOnly = false;
 }
 document.getElementById("btnCapNhat").onclick = capNhatThongTinNhanVien;
